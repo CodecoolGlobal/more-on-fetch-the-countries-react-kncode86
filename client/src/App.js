@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Countries from './components/Countries';
 import CountryData from './components/CountryData';
+import FavoriteCountries from './components/FavoriteCountries';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
   const [sortOrder, setSortOrder] = useState('ascending');
   const [sortedCountries, setSortedCountry] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => 
   {
@@ -33,6 +35,14 @@ function App() {
     setSelected(null);
   }
 
+  const favoriteBtn = () => {
+    setIsFavorite(true);
+  }
+
+  const handleToBack = (input) => {
+    setIsFavorite(input);
+  }
+
   return (
     <div className="App">
       <div>
@@ -47,26 +57,31 @@ function App() {
       <div>
         <button onClick={() => setSortOrder('ascending')}>Sort A-Z</button>
         <button onClick={() => setSortOrder('descending')}>Sort Z-A</button>
+        <button onClick={favoriteBtn}>Show Favorite Countries</button>
       </div>
       {
-      selected ? 
-        (<CountryData
-          data={selected}
-          onBack={handleBackBtn}
-        />):
-        (
-          sortedCountries.filter(val => 
-            (searchTerm === "") ? val : val.name.common.toLowerCase().includes(searchTerm.toLowerCase()))
-            .map((country, index) => 
-              <Countries
-                key={index}
-                className={country.name.common}
-                country={country.name.common}
-                data={country}
-                onSelect={handleCountry}
-              />
+        isFavorite ? 
+          (<FavoriteCountries back={handleToBack}/>)
+          :
+          (selected ? 
+            (<CountryData
+              data={selected}
+              onBack={handleBackBtn}
+            />):
+            (
+              sortedCountries.filter(val => 
+                (searchTerm === "") ? val : val.name.common.toLowerCase().includes(searchTerm.toLowerCase()))
+                .map((country, index) => 
+                  <Countries
+                    key={index}
+                    className={country.name.common}
+                    country={country.name.common}
+                    data={country}
+                    onSelect={handleCountry}
+                  />
+              )
+            )
           )
-        )
       }
     </div>
   );

@@ -13,7 +13,6 @@ function Countries(props){
     } 
 
     async function setFavorites() {
-        buttonSign === "+" ? setButtonSign("-") : setButtonSign("+");
         if(buttonSign === "+"){
             try{
             const res = await fetch('http://localhost:3001/api/fav', {
@@ -27,6 +26,7 @@ function Countries(props){
                 console.error(err);
             }
         }
+        buttonSign === "+" ? setButtonSign("-") : setButtonSign("+");
     }
 
     return(
