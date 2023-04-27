@@ -1,10 +1,15 @@
+import { useState } from "react";
+
 function Countries(props){
     const type= props.type;
     const className= props.className;
     const country= props.country;
+    const onSelect = props.onSelect;
+
+    const [buttonSign, setButtonSign] = useState("+");
 
     const handleSelect = () => {
-        props.onSelect(country);
+        onSelect(country);
     } 
 
     async function setFavorites() {
@@ -16,14 +21,15 @@ function Countries(props){
            });
            const country = await res.json();
            console.log(country);
+           buttonSign === "+" ? setButtonSign("-") : setButtonSign("+");
         }catch(err){
             console.error(err);
         }
     }
-    
+
     return(
         <div className={className}>
-            <h2 type={type}> <button onClick={setFavorites}>+</button> {country}</h2> 
+            <h2 type={type}> <button onClick={setFavorites}>{buttonSign}</button> {country}</h2> 
             <button type="button" className={className} onClick={handleSelect}>Learn more</button>  
         </div>
     )

@@ -9,7 +9,7 @@ app.use(cors({origin: "http://localhost:3000"}));
 
 app.post('/api/fav', (req, res) => {
     console.log(req.body);
-    res.json("Post request done.");
+    res.json(req.body.country);
 });
 
 app.listen(3001, () => {
