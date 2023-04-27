@@ -57,7 +57,7 @@ function App() {
         (
           sortedCountries.filter(val => 
             (searchTerm === "") ? val : val.name.common.toLowerCase().includes(searchTerm.toLowerCase()))
-            .map((country, index) => (
+            .map((country, index) => 
               <Countries
                 key={index}
                 className={country.name.common}
@@ -65,7 +65,6 @@ function App() {
                 data={country}
                 onSelect={handleCountry}
               />
-            )
           )
         )
       }
