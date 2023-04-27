@@ -13,17 +13,19 @@ function Countries(props){
     } 
 
     async function setFavorites() {
-        try{
-           const res = await fetch('http://localhost:3001/api/fav', {
-            method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
-            body: JSON.stringify({country: props.country})
-           });
-           const country = await res.json();
-           console.log(country);
-           buttonSign === "+" ? setButtonSign("-") : setButtonSign("+");
-        }catch(err){
-            console.error(err);
+        buttonSign === "+" ? setButtonSign("-") : setButtonSign("+");
+        if(buttonSign === "+"){
+            try{
+            const res = await fetch('http://localhost:3001/api/fav', {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify({country: props.country})
+            });
+            const country = await res.json();
+            console.log(country);
+            }catch(err){
+                console.error(err);
+            }
         }
     }
 
